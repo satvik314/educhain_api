@@ -58,6 +58,9 @@ class NCERTLessonPlan(BaseModel):
 @app.post("/generate-mcq", status_code=status.HTTP_200_OK)
 async def api_generate_mcq_questions(request: MCQRequest):
     try:
+        llama3_groq = ChatOpenAI(model = "llama3-70b-8192",
+                                openai_api_base = "https://api.groq.com/openai/v1",
+                                openai_api_key = os.getenv("GROQ_API_KEY"))
         custom_ncert_template = """
         Generate {num} multiple-choice question (MCQ) based on the given topic and level.
         Provide the question, four answer options, and the correct answer.
@@ -75,7 +78,8 @@ async def api_generate_mcq_questions(request: MCQRequest):
             custom_instructions=custom_ncert_template + request.customInstructions,
             is_ncert=request.isNcert,
             prompt_template=custom_ncert_template,
-            subtopic=request.subtopic
+            subtopic=request.subtopic,
+            llm = llama3_groq
         )
         return result
     except Exception as e:
