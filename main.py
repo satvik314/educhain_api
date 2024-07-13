@@ -6,7 +6,7 @@ from typing import List
 from dotenv import load_dotenv
 
 from langchain_openai import ChatOpenAI
-from educhain import qna_engine, content_engine
+from educhain import qna_engine
 
 # Load environment variables
 load_dotenv()
