@@ -10,6 +10,7 @@ from educhain import qna_engine
 
 # Load environment variables
 load_dotenv()
+os.environ["OPENAI_API_KEY"] = "dummy_key"
 
 app = FastAPI()
 
